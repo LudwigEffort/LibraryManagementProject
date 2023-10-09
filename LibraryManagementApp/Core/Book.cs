@@ -10,5 +10,11 @@ namespace LibraryManagementApp.Core
             ISBN = isbn;
             Pages = pages;
         }
+        //TODO: how to print List
+        public override string ToString()
+        {
+            string authors = string.Join(", ", Authors);
+            return $"{Title}, {Year}, {Genre}, {Location}, {Status}, {authors}, {ISBN}, {Pages}";
+        }
     }
 }
