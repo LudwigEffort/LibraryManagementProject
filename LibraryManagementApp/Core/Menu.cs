@@ -21,7 +21,7 @@ namespace LibraryManagementApp.Core
                         Console.WriteLine($"Your are Gueset!");
                         Console.WriteLine($"");
                         //TODO: print all availabe document
-                        Menu.SubMenu();
+                        Menu.SubMenuGuest();
                         break;
                     case 2:
                         Console.Clear();
@@ -40,12 +40,14 @@ namespace LibraryManagementApp.Core
 
         }
 
-        public static void SubMenu()
+        public static void SubMenuGuest()
         {
-            string[] option = { "1. Booking", "2. Unbooking", "0. Back" };
+            string[] option = { "1. Print all itmes", "2. Print by", "0. Back" };
             int selectOption;
 
-            Console.WriteLine($"Booking Labs:");
+            Console.WriteLine($"You're Guest!");
+            Console.WriteLine();
+            Console.WriteLine($"What you wanna do?");
 
             do
             {
@@ -55,7 +57,42 @@ namespace LibraryManagementApp.Core
                 {
                     case 1:
                         Console.Clear();
-                        Console.WriteLine($"Your Booked!");
+                        Console.WriteLine($"Printing all items...");
+                        break;
+                    case 2:
+                        Console.Clear();
+                        Console.WriteLine($"Print by...!");
+                        SubMenuSearch();
+                        break;
+                    case 0:
+                        Console.Clear();
+                        Console.WriteLine($"Back...");
+                        Menu.StartMenu();
+                        break;
+                    default:
+                        Console.WriteLine($"Wrong option!");
+                        break;
+                }
+            } while (selectOption != 1 && selectOption != 2 && selectOption != 0);
+
+        }
+
+        public static void SubMenuSearch()
+        {
+            string[] option = { "1. Print by Title", "2. Print by ISBN or Serial Numbers", "0. Back" };
+            int selectOption;
+
+            Console.WriteLine($":");
+
+            do
+            {
+                ShowsMenu(option);
+                selectOption = ReadChoise();
+                switch (selectOption)
+                {
+                    case 1:
+                        Console.Clear();
+                        Console.WriteLine($"Printing all items...");
                         break;
                     case 2:
                         Console.Clear();
