@@ -4,10 +4,10 @@ namespace LibraryManagementApp.Core
     {
         public static void StartMenu()
         {
-            string[] option = { "1. Teacher", "2. Student", "0. Exit" };
+            string[] option = { "1. Guest", "2. Admin", "0. Exit" };
             int selectOption;
 
-            Console.WriteLine($"Computer Labs Manager");
+            Console.WriteLine($"Library Manager");
 
             do
             {
@@ -17,12 +17,16 @@ namespace LibraryManagementApp.Core
                 {
                     case 1:
                         Console.Clear();
-                        Console.WriteLine($"Your are Teacher!");
+                        //TODO: check password
+                        Console.WriteLine($"Your are Gueset!");
+                        Console.WriteLine($"");
+                        //TODO: print all availabe document
                         Menu.SubMenu();
                         break;
                     case 2:
                         Console.Clear();
-                        Console.WriteLine($"Your are Student!");
+                        //TODO: check password
+                        Console.WriteLine($"Your are Admin!");
                         break;
                     case 0:
                         Console.Clear();
