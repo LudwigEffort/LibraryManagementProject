@@ -7,7 +7,9 @@ namespace LibraryManagementApp.Core
             string[] option = { "1. Guest", "2. Admin", "0. Exit" };
             int selectOption;
 
-            Console.WriteLine($"Library Manager");
+            Console.Clear();
+            Figlet.PrintProgramTitle();
+            Console.WriteLine($"How are you?");
 
             do
             {
@@ -18,10 +20,7 @@ namespace LibraryManagementApp.Core
                     case 1:
                         Console.Clear();
                         //TODO: check password
-                        Console.WriteLine($"Your are Gueset!");
-                        Console.WriteLine($"");
-                        //TODO: print all availabe document
-                        Menu.SubMenuGuest();
+                        SubMenuGuest();
                         break;
                     case 2:
                         Console.Clear();
@@ -42,7 +41,7 @@ namespace LibraryManagementApp.Core
 
         public static void SubMenuGuest()
         {
-            string[] option = { "1. Print all itmes", "2. Print by", "0. Back" };
+            string[] option = { "1. Booking item", "2. Print my booking", "0. Back" };
             int selectOption;
 
             Console.WriteLine($"You're Guest!");
@@ -57,17 +56,15 @@ namespace LibraryManagementApp.Core
                 {
                     case 1:
                         Console.Clear();
-                        Console.WriteLine($"Printing all items...");
+                        SubMenuItem();
                         break;
                     case 2:
                         Console.Clear();
-                        Console.WriteLine($"Print by...!");
-                        SubMenuSearch();
+                        Console.WriteLine($"Print my booking...");
                         break;
                     case 0:
                         Console.Clear();
-                        Console.WriteLine($"Back...");
-                        Menu.StartMenu();
+                        StartMenu();
                         break;
                     default:
                         Console.WriteLine($"Wrong option!");
@@ -77,12 +74,13 @@ namespace LibraryManagementApp.Core
 
         }
 
-        public static void SubMenuSearch()
+        public static void SubMenuItem()
         {
-            string[] option = { "1. Print by Title", "2. Print by ISBN or Serial Numbers", "0. Back" };
+            string[] option = { "1. Book", "2. DVD", "0. Back" };
             int selectOption;
+            bool isBook = true;
 
-            Console.WriteLine($":");
+            Console.WriteLine($"What you wanna booking?");
 
             do
             {
@@ -92,16 +90,72 @@ namespace LibraryManagementApp.Core
                 {
                     case 1:
                         Console.Clear();
-                        Console.WriteLine($"Printing all items...");
+                        SubMenuSearch(isBook);
                         break;
                     case 2:
                         Console.Clear();
-                        Console.WriteLine($"Your Booked!");
+                        isBook = false;
+                        //Console.WriteLine($"Print by...!");
+                        SubMenuSearch(isBook);
                         break;
                     case 0:
                         Console.Clear();
-                        Console.WriteLine($"Back...");
-                        Menu.StartMenu();
+                        SubMenuGuest(); //TODO: add if for manage guest or admin
+                        break;
+                    default:
+                        Console.WriteLine($"Wrong option!");
+                        break;
+                }
+            } while (selectOption != 1 && selectOption != 2 && selectOption != 0);
+
+        }
+
+        public static void SubMenuSearch(bool isBook)
+        {
+            string bookOrDvd = "";
+            string item = "";
+            if (isBook == true)
+            {
+                item = "book";
+                bookOrDvd = "2. Search book by ISBN";
+            }
+            else
+            {
+                item = "DVD";
+                bookOrDvd = "2. Search DVD by Serial Numbers";
+            }
+            string[] option = { "1. Search by Title", bookOrDvd, "0. Back" };
+            int selectOption;
+
+            Console.WriteLine($"You booking {item}:");
+
+            do
+            {
+                ShowsMenu(option);
+                selectOption = ReadChoise();
+                switch (selectOption)
+                {
+                    //DO: add if to filter by book o dvd
+                    case 1:
+                        Console.Clear();
+                        Console.WriteLine($"Searching by Title...");
+                        //TODO: insert booking methods
+                        break;
+                    case 2:
+                        Console.Clear();
+                        if (isBook == true)
+                        {
+                            Console.WriteLine($"Searching book by ISBN...");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Searching DVD by Serial Numbers...");
+                        }
+                        //TODO: insert booking methods
+                        break;
+                    case 0:
+                        Console.Clear();
+                        SubMenuItem();
                         break;
                     default:
                         Console.WriteLine($"Wrong option!");
@@ -130,6 +184,8 @@ namespace LibraryManagementApp.Core
             }
             return selectOption;
         }
+
+
     }
 
 }
