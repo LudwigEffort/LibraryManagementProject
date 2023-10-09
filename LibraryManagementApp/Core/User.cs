@@ -1,9 +1,9 @@
 namespace LibraryManagementApp.Core
 {
-  abstract  class User
+    abstract class User
     {
-        private string Email, Password, Name, Lastname,PhoneNumber;
+        private string Email, Password, Name, Lastname, PhoneNumber;
         private bool Permission;
-        public void BookingDocument(){}
+        public void BookingDocument() { }
     }
 }
