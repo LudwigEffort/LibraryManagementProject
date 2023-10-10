@@ -1,11 +1,11 @@
 namespace LibraryManagementApp.Core
 {
-    abstract class User
+    public class User
     {
-        private string? Email, Password, Name, Lastname, PhoneNumber;
-        private bool Permission;
+        public string? Email, Password, Name, Lastname, PhoneNumber;
+        public bool Permission { get; set; }
 
-        protected User(string? email, string? password, string? name, string? lastname, string? phoneNumber, bool permission)
+        public User(string? email, string? password, string? name, string? lastname, string? phoneNumber, bool permission)
         {
             Email = email;
             Password = password;
@@ -15,6 +15,12 @@ namespace LibraryManagementApp.Core
             Permission = permission;
         }
 
-        public void BookingDocument() { }
+        public override string ToString()
+        {
+            return $"{Email}, {Password}, {Name}, {Lastname}, {PhoneNumber}, {Permission}";
+        }
+
+        public void BookingDocument() { } //? should add ChangeStatus() and NewLoan()
+
     }
 }

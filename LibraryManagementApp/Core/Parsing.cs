@@ -1,8 +1,9 @@
 namespace LibraryManagementApp.Core
 {
-    public static class Parsing
+    public class Parsing
     {
         public const string inputBooksDb = "../LibraryManagementApp/Database/Books.csv";
+        public const string inputUser = "../LibraryManagementApp/Database/Users.csv";
 
         public static IEnumerable<Book> Read()
         {
@@ -76,6 +77,46 @@ namespace LibraryManagementApp.Core
             {
                 Console.WriteLine($"Error...");
             }
+
+        }
+
+        public static IEnumerable<User> ReadUser()
+        {
+            using var input = File.OpenText(inputUser);
+            var users = new List<User>();
+            input.ReadLine();
+
+            while (true)
+            {
+                string? line = input.ReadLine();
+
+                if (line is null)
+                {
+                    return users;
+                }
+
+                var chunks = line.Split(',');
+
+                string email = chunks[0][2..];
+                string password = chunks[1];
+                string name = chunks[2];
+                string lastname = chunks[3];
+                string phoneNumber = chunks[4];
+                bool permission = Convert.ToBoolean(chunks[5]);
+
+                var user = new User(email, password, name, lastname, phoneNumber, permission);
+
+                users.Add(user);
+            }
+
+        }
+
+        public static void NewUser(User user)
+        {
+            //User user = new User("pippo", "pippo", "pippo", "pippo", "pippo", false);
+            using var output = File.AppendText(inputUser);
+
+            output.WriteLine($"- {user.Email}, {user.Password}, {user.Name}, {user.Lastname}, {user.PhoneNumber}, {user.Permission}");
 
         }
     }

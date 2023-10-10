@@ -4,7 +4,7 @@ namespace LibraryManagementApp.Core
     {
         public static void StartMenu()
         {
-            string[] option = { "1. Guest", "2. Admin", "0. Exit" };
+            string[] option = { "1. Guest", "2. Admin", "3. New user", "0. Exit" };
             int selectOption;
 
             Console.Clear();
@@ -17,15 +17,21 @@ namespace LibraryManagementApp.Core
                 selectOption = ReadChoise();
                 switch (selectOption)
                 {
-                    case 1:
+                    case 1: //? guest login (now user login)
                         Console.Clear();
                         //TODO: check password
                         SubMenuGuest();
                         break;
-                    case 2:
+                    case 2: //? admin login
                         Console.Clear();
                         //TODO: check password
                         Console.WriteLine($"Your are Admin!");
+                        break;
+                    case 3: //? new user
+                        Console.Clear();
+                        User user = SignUpForm();
+                        Parsing.NewUser(user);
+                        StartMenu();
                         break;
                     case 0:
                         Console.Clear();
@@ -35,7 +41,7 @@ namespace LibraryManagementApp.Core
                         Console.WriteLine($"Wrong option!");
                         break;
                 }
-            } while (selectOption != 1 && selectOption != 2 && selectOption != 0);
+            } while (selectOption != 1 && selectOption != 2 && selectOption != 3 && selectOption != 0);
 
         }
 
@@ -185,6 +191,41 @@ namespace LibraryManagementApp.Core
             return selectOption;
         }
 
+        //* Utils
+        static public User SignUpForm() //?TODO: while loops for wrong field 
+        {
+            bool permission = false;
+
+            Console.WriteLine($"User Form.");
+
+            Console.WriteLine($"Enter your email: ");
+            string? email = Console.ReadLine();
+
+            Console.WriteLine($"Enter your password: ");
+            string? password = Console.ReadLine();
+
+            Console.WriteLine($"Enter your name: ");
+            string? name = Console.ReadLine();
+
+            Console.WriteLine($"Enter your last name: ");
+            string? lastname = Console.ReadLine();
+
+            Console.WriteLine($"Enter your phone number: ");
+            string? phoneNumber = Console.ReadLine();
+
+            Console.WriteLine($"You are admin?");
+            ConsoleKeyInfo keyInfo = Console.ReadKey();
+            char answer = keyInfo.KeyChar;
+
+            if (answer == 'y')
+            {
+                permission = true;
+            }
+
+            Console.WriteLine($"");
+
+            return new User(email, password, name, lastname, phoneNumber, permission);
+        }
 
     }
 
