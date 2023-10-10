@@ -1,12 +1,13 @@
 namespace LibraryManagementApp.Core
 {
-    abstract class Document
+    public class Document
     {
-        public string Title, Year, Genre, Location;
+        public string Title, Genre, Location;
+        public int Year;
         public bool Status;
-        public List<string> Authors;
+        public string[] Authors;
 
-        public Document(string title, string year, string genre, string location, bool status, List<string> authors)
+        public Document(string title, int year, string genre, string location, bool status, string[] authors)
         {
             Title = title;
             Year = year;

@@ -1,12 +1,12 @@
 
 namespace LibraryManagementApp.Core
 {
-    class Book : Document
+    public class Book : Document
     {
-        string ISBN {get;set;}
-        string Pages{get;set;}
+        string ISBN { get; set; }
+        int Pages { get; set; }
 
-        public Book(string title, string year, string genre, string location, bool status, List<string> authors, string isbn, string pages) : base(title, year, genre, location, status, authors)
+        public Book(string title, int year, string genre, string location, bool status, string[] authors, string isbn, int pages) : base(title, year, genre, location, status, authors)
         {
             ISBN = isbn;
             Pages = pages;
