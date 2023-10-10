@@ -35,5 +35,41 @@ namespace LibraryManagementApp.Core
                 books.Add(book);
             }
         }
+
+        public static void ChangeStatus(string isbn, string newStatus)
+        {
+            try
+            {
+                var lines = File.ReadAllLines(inputBooksDb);
+                bool found = false;
+
+                for (int i = 1; i < lines.Length; i++)
+                {
+                    var chunks = lines[i].Split(',');
+
+                    if (chunks.Length >= 7 && chunks[6].Trim().ToLower() == isbn.Trim().ToLower())
+                    {
+                        chunks[4] = newStatus.ToString();
+                        lines[i] = string.Join(',', chunks);
+                        found = true;
+                        break;
+                    }
+
+                }
+
+                if (!found) //? NOT FOUND
+                {
+                    Console.WriteLine($"Book with ISBN {isbn} not found.");
+                    return;
+                }
+
+                File.WriteAllLines(inputBooksDb, lines);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error...");
+            }
+
+        }
     }
 }

@@ -9,10 +9,16 @@ class Library
         //Menu.StartMenu();
 
         var books = Parsing.Read();
-        foreach (var book in books)
-        {
-            Console.WriteLine(book.ToString());
-        }
+
+        // foreach (var book in books)
+        // {
+        //     if (book.Status == true)
+        //     {
+        //         Console.WriteLine(book.ToString());
+        //     }
+        // }
+
+        Parsing.ChangeStatus("978-0316769480", "false");
 
 
         // List<string> authorBook1 = new List<string> { "tolkien", "tolkien son" };
