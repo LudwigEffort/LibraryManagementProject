@@ -8,7 +8,7 @@ namespace LibraryManagementApp.Core
         {
             using var input = File.OpenText(inputBooksDb);
             var books = new List<Book>();
-            input.Read();
+            input.ReadLine();
 
             while (true)
             {
