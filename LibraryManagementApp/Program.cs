@@ -18,7 +18,7 @@ class Library
         //     }
         // }
 
-        Parsing.ChangeStatus("978-0316769480", "false");
+        Parsing.ChangeStatus("978-0316769480");
 
 
         // List<string> authorBook1 = new List<string> { "tolkien", "tolkien son" };

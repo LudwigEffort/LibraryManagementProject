@@ -36,7 +36,7 @@ namespace LibraryManagementApp.Core
             }
         }
 
-        public static void ChangeStatus(string isbn, string newStatus)
+        public static void ChangeStatus(string isbn)
         {
             try
             {
@@ -49,7 +49,14 @@ namespace LibraryManagementApp.Core
 
                     if (chunks.Length >= 7 && chunks[6].Trim().ToLower() == isbn.Trim().ToLower())
                     {
-                        chunks[4] = newStatus.ToString();
+                        if (Convert.ToBoolean(chunks[4]) == true)
+                        {
+                            chunks[4] = false.ToString().ToLower();
+                        }
+                        else
+                        {
+                            chunks[4] = true.ToString().ToLower();
+                        }
                         lines[i] = string.Join(',', chunks);
                         found = true;
                         break;

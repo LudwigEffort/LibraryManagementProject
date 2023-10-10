@@ -1,6 +1,6 @@
 Library books:
-- The Great Gatsby, 1925, Fiction, Shelf1, true, F. Scott Fitzgerald, 978-0743273565, 180
+- The Great Gatsby, 1925, Fiction, Shelf1, false, F. Scott Fitzgerald, 978-0743273565, 180
 - To Kill a Mockingbird, 1960, Fiction, Shelf2,true, Harper Lee, 978-0061120084, 281
 - 1984, 1949, Dystopian, Shelf3, true, George Orwell, 978-0451524935, 328
 - Pride and Prejudice, 1813, Romance, Shelf4, true, Jane Austen, 978-1612930349, 279
-- The Catcher in the Rye, 1951, Fiction, Shelf5,false, J.D. Salinger, 978-0316769480, 224
+- The Catcher in the Rye, 1951, Fiction, Shelf5,true, J.D. Salinger, 978-0316769480, 224
