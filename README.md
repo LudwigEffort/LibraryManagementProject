@@ -9,5 +9,8 @@
   - DOING: Parsing methods
     - BOOK:
       - DONE: methods to print all books in db
-      - DOING: methods to change status in db
+      - DONE: methods to change status in db
       - TODO: methods to make loan
+    - USER:
+      - DONE: methods to sing up
+      - TODO: methods to login
