@@ -18,5 +18,5 @@
       - DONE: methods to login
       - TODO: login admin
     - LOAN:
-      - TODO: progressive numbers
+      - TODO: progressive numbers for loan
       - TODO: search by name and lastname

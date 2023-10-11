@@ -145,9 +145,9 @@ namespace LibraryManagementApp.Core
                         Console.Clear();
                         if (isBook == true)
                         {
-                            Console.WriteLine($"Print all book...");
                             List<Book> books = Parsing.Read();
                             PrintBook(books);
+                            //? MakeLoan(user,boook);
                         }
                         else
                         {
@@ -214,16 +214,11 @@ namespace LibraryManagementApp.Core
         //* Utils book
         public static void PrintBook(List<Book> books)
         {
+            Console.WriteLine($"Available books: ");
             foreach (var book in books)
             {
                 if (book.Status == true)
                 {
-                    Console.WriteLine($"Available books: ");
-                    Console.WriteLine(book.ToString());
-                }
-                else
-                {
-                    Console.WriteLine($"Not available books: ");
                     Console.WriteLine(book.ToString());
                 }
             }
