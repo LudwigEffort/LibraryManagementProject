@@ -5,7 +5,9 @@ namespace LibraryManagementApp.Core
         public const string inputBooksDb = "../LibraryManagementApp/Database/Books.csv";
         public const string inputUser = "../LibraryManagementApp/Database/Users.csv";
 
-        public static IEnumerable<Book> Read()
+        //* BOOKS
+
+        public static IEnumerable<Book> Read() //? read from Books.csv
         {
             using var input = File.OpenText(inputBooksDb);
             var books = new List<Book>();
@@ -37,7 +39,7 @@ namespace LibraryManagementApp.Core
             }
         }
 
-        public static void ChangeStatus(string isbn)
+        public static void ChangeStatus(string isbn) //? change status book from Books.csv
         {
             try
             {
@@ -73,14 +75,18 @@ namespace LibraryManagementApp.Core
 
                 File.WriteAllLines(inputBooksDb, lines);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine($"Error...");
             }
 
         }
 
-        public static IEnumerable<User> ReadUser()
+        //* LOANS
+
+        //* USERS
+
+        public static IEnumerable<User> ReadUser() //? print all user from Users.csv
         {
             using var input = File.OpenText(inputUser);
             var users = new List<User>();
@@ -111,12 +117,17 @@ namespace LibraryManagementApp.Core
 
         }
 
-        public static void NewUser(User user)
+        public static void NewUser(User user) //? add new user into Users.csv
         {
             //User user = new User("pippo", "pippo", "pippo", "pippo", "pippo", false);
             using var output = File.AppendText(inputUser);
 
             output.WriteLine($"- {user.Email}, {user.Password}, {user.Name}, {user.Lastname}, {user.PhoneNumber}, {user.Permission}");
+
+        }
+
+        public static void Login(List<User> users)
+        {
 
         }
     }
