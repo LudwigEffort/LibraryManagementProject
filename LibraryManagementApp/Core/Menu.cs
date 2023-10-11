@@ -15,17 +15,16 @@ namespace LibraryManagementApp.Core
             {
                 ShowsMenu(option);
                 selectOption = ReadChoise();
+                List<User> userLogin = Parsing.ReadUser();
                 switch (selectOption)
                 {
                     case 1: //? guest login (now user login)
                         Console.Clear();
-                        List<User> userLogin = Parsing.ReadUser();
                         Login(userLogin);
                         break;
                     case 2: //? admin login
                         Console.Clear();
-                        //TODO: check password
-                        Console.WriteLine($"Your are Admin!");
+                        //TODO: add admin login
                         break;
                     case 3: //? new user
                         Console.Clear();
@@ -66,7 +65,7 @@ namespace LibraryManagementApp.Core
                         break;
                     case 2:
                         Console.Clear();
-                        Console.WriteLine($"Print my booking...");
+                        Console.WriteLine($"Not implemented");
                         break;
                     case 0:
                         Console.Clear();
@@ -123,14 +122,14 @@ namespace LibraryManagementApp.Core
             if (isBook == true)
             {
                 item = "book";
-                bookOrDvd = "2. Search book by ISBN";
+                bookOrDvd = "3. Search book by ISBN";
             }
             else
             {
                 item = "DVD";
-                bookOrDvd = "2. Search DVD by Serial Numbers";
+                bookOrDvd = "3. Search DVD by Serial Numbers";
             }
-            string[] option = { "1. Search by Title", bookOrDvd, "0. Back" };
+            string[] option = { "1. Print all available", "2. Search by Title", bookOrDvd, "0. Back" };
             int selectOption;
 
             Console.WriteLine($"You booking {item}:");
@@ -144,20 +143,41 @@ namespace LibraryManagementApp.Core
                     //DO: add if to filter by book o dvd
                     case 1:
                         Console.Clear();
-                        Console.WriteLine($"Searching by Title...");
-                        //TODO: insert booking methods
+                        if (isBook == true)
+                        {
+                            Console.WriteLine($"Print all book...");
+                            List<Book> books = Parsing.Read();
+                            PrintBook(books);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Print all available DVD...");
+                            //TODO: add print all dvd methods
+                        }
                         break;
                     case 2:
                         Console.Clear();
                         if (isBook == true)
                         {
+                            Console.WriteLine($"Searching book by Title...");
+                            //TODO: add print by title
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Searching dvd by Title...");
+                        }
+                        break;
+                    case 3:
+                        Console.Clear();
+                        if (isBook == true)
+                        {
                             Console.WriteLine($"Searching book by ISBN...");
+                            //TODO: add print by isbn
                         }
                         else
                         {
                             Console.WriteLine($"Searching DVD by Serial Numbers...");
                         }
-                        //TODO: insert booking methods
                         break;
                     case 0:
                         Console.Clear();
@@ -189,6 +209,24 @@ namespace LibraryManagementApp.Core
                 Console.WriteLine($"Select a option with 1-2:");
             }
             return selectOption;
+        }
+
+        //* Utils book
+        public static void PrintBook(List<Book> books)
+        {
+            foreach (var book in books)
+            {
+                if (book.Status == true)
+                {
+                    Console.WriteLine($"Available books: ");
+                    Console.WriteLine(book.ToString());
+                }
+                else
+                {
+                    Console.WriteLine($"Not available books: ");
+                    Console.WriteLine(book.ToString());
+                }
+            }
         }
 
         //* Utils user

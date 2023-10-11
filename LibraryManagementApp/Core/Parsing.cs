@@ -7,7 +7,7 @@ namespace LibraryManagementApp.Core
 
         //* BOOKS
 
-        public static IEnumerable<Book> Read() //? read from Books.csv
+        public static List<Book> Read() //? read from Books.csv
         {
             using var input = File.OpenText(inputBooksDb);
             var books = new List<Book>();
