@@ -86,7 +86,7 @@ namespace LibraryManagementApp.Core
 
         //* USERS
 
-        public static IEnumerable<User> ReadUser() //? print all user from Users.csv
+        public static List<User> ReadUser() //? print all user from Users.csv
         {
             using var input = File.OpenText(inputUser);
             var users = new List<User>();
@@ -103,12 +103,12 @@ namespace LibraryManagementApp.Core
 
                 var chunks = line.Split(',');
 
-                string email = chunks[0][2..];
-                string password = chunks[1];
-                string name = chunks[2];
-                string lastname = chunks[3];
-                string phoneNumber = chunks[4];
-                bool permission = Convert.ToBoolean(chunks[5]);
+                string email = chunks[0][2..].Trim();
+                string password = chunks[1].Trim();
+                string name = chunks[2].Trim();
+                string lastname = chunks[3].Trim();
+                string phoneNumber = chunks[4].Trim();
+                bool permission = Convert.ToBoolean(chunks[5].Trim());
 
                 var user = new User(email, password, name, lastname, phoneNumber, permission);
 

@@ -19,8 +19,8 @@ namespace LibraryManagementApp.Core
                 {
                     case 1: //? guest login (now user login)
                         Console.Clear();
-                        //TODO: check password
-                        SubMenuGuest();
+                        List<User> userLogin = Parsing.ReadUser();
+                        Login(userLogin);
                         break;
                     case 2: //? admin login
                         Console.Clear();
@@ -191,7 +191,7 @@ namespace LibraryManagementApp.Core
             return selectOption;
         }
 
-        //* Utils
+        //* Utils user
         static public User SignUpForm() //?TODO: while loops for wrong field 
         {
             bool permission = false;
@@ -225,6 +225,29 @@ namespace LibraryManagementApp.Core
             Console.WriteLine($"");
 
             return new User(email, password, name, lastname, phoneNumber, permission);
+        }
+
+        static void Login(List<User> users)
+        {
+            Console.WriteLine($"Enter email: ");
+            string? email = Console.ReadLine();
+
+            Console.WriteLine($"Enter password: ");
+            string? password = Console.ReadLine();
+
+            User loggedInUser = users.Find(user => user.Email == email && user.Password == password); //TODO: resolve it!
+
+            if (loggedInUser != null)
+            {
+                Console.Clear();
+                Console.WriteLine($"Login succesful. Welcome {loggedInUser.Name} {loggedInUser.Lastname}");
+                SubMenuGuest();
+            }
+            else
+            {
+                Console.WriteLine($"Invalid email or password!");
+            }
+
         }
 
     }
