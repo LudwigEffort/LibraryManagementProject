@@ -138,6 +138,7 @@ namespace LibraryManagementApp.Core
             {
                 ShowsMenu(option);
                 selectOption = ReadChoise();
+                List<Book> books = Parsing.Read();
                 switch (selectOption)
                 {
                     //DO: add if to filter by book o dvd
@@ -145,7 +146,6 @@ namespace LibraryManagementApp.Core
                         Console.Clear();
                         if (isBook == true)
                         {
-                            List<Book> books = Parsing.Read();
                             PrintBook(books);
                             //? MakeLoan(user,boook);
                         }
@@ -161,6 +161,7 @@ namespace LibraryManagementApp.Core
                         {
                             Console.WriteLine($"Searching book by Title...");
                             //TODO: add print by title
+                            SearchByTitle(books, isBook);
                         }
                         else
                         {
@@ -221,6 +222,31 @@ namespace LibraryManagementApp.Core
                 {
                     Console.WriteLine(book.ToString());
                 }
+            }
+        }
+
+        public static void SearchByTitle(List<Book> books, bool isBook)
+        {
+            Console.WriteLine($"Search by title.");
+            Console.WriteLine($"Enter a title: ");
+            string? searchTitle = Console.ReadLine();
+
+            if (searchTitle != null && searchTitle != "")
+            {
+                List<Book> filteredTitle = books.Where(book => book.Title.Contains(searchTitle, StringComparison.OrdinalIgnoreCase)).ToList();
+                Console.WriteLine($"Books that contains ({searchTitle}) are: ");
+                foreach (var book in filteredTitle)
+                {
+                    if (book.Status == true)
+                    {
+                        Console.WriteLine(book.ToString());
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Wrong title inserted!");
+                SubMenuSearch(isBook);
             }
         }
 

@@ -126,9 +126,5 @@ namespace LibraryManagementApp.Core
 
         }
 
-        public static void Login(List<User> users)
-        {
-
-        }
     }
 }

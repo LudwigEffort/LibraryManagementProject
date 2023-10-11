@@ -10,13 +10,13 @@
     - BOOK:
       - DONE: methods to print all books in db
       - DONE: methods to change status in db
-      - TODO: methods to make loan
-      - TODO: methods search book by title or isbn
+      - DO: methods search book by title or isbn
       - TODO: add to loan the **TIME**
     - USER:
       - DONE: methods to sing up
       - DONE: methods to login
       - TODO: login admin
     - LOAN:
+      - TODO: methods to make loan
       - TODO: progressive numbers for loan
-      - TODO: search by name and lastname
+      - TODO: search loan by name and lastname (admin)
