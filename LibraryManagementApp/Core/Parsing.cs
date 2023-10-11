@@ -30,7 +30,7 @@ namespace LibraryManagementApp.Core
                 string location = chunks[3];
                 bool status = Convert.ToBoolean(chunks[4]);
                 string[] authors = chunks[5].Split(';');
-                string isbn = chunks[6];
+                string isbn = chunks[6].Trim(new char[] { ' ', '-' });
                 int pages = Convert.ToInt32(chunks[7]);
 
                 var book = new Book(title, year, genre, location, status, authors, isbn, pages);

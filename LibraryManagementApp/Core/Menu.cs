@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace LibraryManagementApp.Core
 {
     class Menu
@@ -159,8 +161,6 @@ namespace LibraryManagementApp.Core
                         Console.Clear();
                         if (isBook == true)
                         {
-                            Console.WriteLine($"Searching book by Title...");
-                            //TODO: add print by title
                             SearchByTitle(books, isBook);
                         }
                         else
@@ -172,8 +172,7 @@ namespace LibraryManagementApp.Core
                         Console.Clear();
                         if (isBook == true)
                         {
-                            Console.WriteLine($"Searching book by ISBN...");
-                            //TODO: add print by isbn
+                            SearchByIsbn(books, isBook);
                         }
                         else
                         {
@@ -213,6 +212,8 @@ namespace LibraryManagementApp.Core
         }
 
         //* Utils book
+
+        //? Print all available books
         public static void PrintBook(List<Book> books)
         {
             Console.WriteLine($"Available books: ");
@@ -225,6 +226,7 @@ namespace LibraryManagementApp.Core
             }
         }
 
+        //? Print available books by Title
         public static void SearchByTitle(List<Book> books, bool isBook)
         {
             Console.WriteLine($"Search by title.");
@@ -249,6 +251,33 @@ namespace LibraryManagementApp.Core
                 SubMenuSearch(isBook);
             }
         }
+
+        //? Print available books by ISBN
+        public static void SearchByIsbn(List<Book> books, bool isBook)
+        {
+            Console.WriteLine($"Search by ISBN.");
+            Console.WriteLine($"Enter a ISBN: ");
+            string? searchISBN = Console.ReadLine();
+
+            if (searchISBN != null && searchISBN != "")
+            {
+                List<Book> filteredIsbn = books.Where(book => book.ISBN.Contains(searchISBN, StringComparison.OrdinalIgnoreCase)).ToList();
+                Console.WriteLine($"Books that contains ({searchISBN}) are: ");
+                foreach (var book in filteredIsbn)
+                {
+                    if (book.Status == true)
+                    {
+                        Console.WriteLine(book.ToString());
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Wrong ISBN inserted!");
+                SubMenuSearch(isBook);
+            }
+        }
+
 
         //* Utils user
         static public User SignUpForm() //?TODO: while loops for wrong field 
