@@ -10,8 +10,7 @@
     - BOOK:
       - DONE: methods to print all books in db
       - DONE: methods to change status in db
-      - DO: methods search book by title or isbn
-      - TODO: add to loan the **TIME**
+      - DONE: methods search book by title or isbn
     - USER:
       - DONE: methods to sing up
       - DONE: methods to login
@@ -20,3 +19,4 @@
       - TODO: methods to make loan
       - TODO: progressive numbers for loan
       - TODO: search loan by name and lastname (admin)
+      - TODO: add to loan the **TIME**

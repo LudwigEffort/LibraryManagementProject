@@ -187,7 +187,7 @@ namespace LibraryManagementApp.Core
                         Console.WriteLine($"Wrong option!");
                         break;
                 }
-            } while (selectOption != 1 && selectOption != 2 && selectOption != 0);
+            } while (selectOption != 1 && selectOption != 2 && selectOption != 3 && selectOption != 0);
 
         }
 
