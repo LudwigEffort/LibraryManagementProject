@@ -24,7 +24,7 @@ namespace LibraryManagementApp.Core
                 {
                     case 1: //? guest login (now user login)
                         Console.Clear();
-                        Login(users, books);
+                        Login(users, books, dvds);
                         break;
                     case 2: //? admin login
                         Console.Clear();
@@ -48,7 +48,7 @@ namespace LibraryManagementApp.Core
 
         }
 
-        public static void SubMenuGuest(List<Book> books)
+        public static void SubMenuGuest(List<Book> books, List<DVD> dvds)
         {
             string[] option = { "1. Booking item", "2. Print my booking", "0. Back" };
             int selectOption;
@@ -65,7 +65,7 @@ namespace LibraryManagementApp.Core
                 {
                     case 1:
                         Console.Clear();
-                        SubMenuItem(books);
+                        SubMenuItem(books, dvds);
                         //Console.WriteLine($"Not implemented");
                         break;
                     case 2:
@@ -84,7 +84,7 @@ namespace LibraryManagementApp.Core
 
         }
 
-        public static void SubMenuItem(List<Book> books)
+        public static void SubMenuItem(List<Book> books, List<DVD> dvds)
         {
             string[] option = { "1. Book", "2. DVD", "0. Back" };
             int selectOption;
@@ -100,16 +100,16 @@ namespace LibraryManagementApp.Core
                 {
                     case 1:
                         Console.Clear();
-                        SubMenuSearch(books, isBook);
+                        SubMenuSearch(books, dvds, isBook);
                         break;
                     case 2:
                         Console.Clear();
                         isBook = false;
-                        SubMenuSearch(books, isBook);
+                        SubMenuSearch(books, dvds, isBook);
                         break;
                     case 0:
                         Console.Clear();
-                        SubMenuGuest(books); //TODO: add if for manage guest or admin
+                        SubMenuGuest(books, dvds); //TODO: add if for manage guest or admin
                         break;
                     default:
                         Console.WriteLine($"Wrong option!");
@@ -119,7 +119,7 @@ namespace LibraryManagementApp.Core
 
         }
 
-        public static void SubMenuSearch(List<Book> books, bool isBook)
+        public static void SubMenuSearch(List<Book> books, List<DVD> dvds, bool isBook)
         {
             string bookOrDvd = "";
             string item = "";
@@ -144,7 +144,7 @@ namespace LibraryManagementApp.Core
                 selectOption = ReadChoise();
 
                 //List<Book> books = Parsing.Read();
-                List<DVD> dvds = Parsing.ReadDvd();
+                //List<DVD> dvds = Parsing.ReadDvd();
 
                 switch (selectOption)
                 {
@@ -165,7 +165,7 @@ namespace LibraryManagementApp.Core
                         Console.Clear();
                         if (isBook == true)
                         {
-                            SearchByTitle(books, isBook); //? Print books by title
+                            SearchByTitle(books, dvds, isBook); //? Print books by title
                             //TODO: add loan methods
                         }
                         else
@@ -178,7 +178,7 @@ namespace LibraryManagementApp.Core
                         Console.Clear();
                         if (isBook == true)
                         {
-                            SearchByIsbn(books, isBook); //? Print book by isbn
+                            SearchByIsbn(books, dvds, isBook); //? Print book by isbn
                             //TODO: add loan methods
                         }
                         else
@@ -189,7 +189,7 @@ namespace LibraryManagementApp.Core
                         break;
                     case 0:
                         Console.Clear();
-                        SubMenuItem(books);
+                        SubMenuItem(books, dvds);
                         break;
                     default:
                         Console.WriteLine($"Wrong option!");
@@ -235,7 +235,7 @@ namespace LibraryManagementApp.Core
         }
 
         //? Print available books by Title
-        public static void SearchByTitle(List<Book> books, bool isBook)
+        public static void SearchByTitle(List<Book> books, List<DVD> dvds, bool isBook)
         {
             Console.WriteLine($"Search by title.");
             Console.WriteLine($"Enter a title: ");
@@ -256,12 +256,12 @@ namespace LibraryManagementApp.Core
             else
             {
                 Console.WriteLine($"Wrong title inserted!");
-                SubMenuSearch(books, isBook);
+                SubMenuSearch(books, dvds, isBook);
             }
         }
 
         //? Print available books by ISBN
-        public static void SearchByIsbn(List<Book> books, bool isBook)
+        public static void SearchByIsbn(List<Book> books, List<DVD> dvds, bool isBook)
         {
             Console.WriteLine($"Search by ISBN.");
             Console.WriteLine($"Enter a ISBN: ");
@@ -282,7 +282,7 @@ namespace LibraryManagementApp.Core
             else
             {
                 Console.WriteLine($"Wrong ISBN inserted!");
-                SubMenuSearch(books, isBook);
+                SubMenuSearch(books, dvds, isBook);
             }
         }
 
@@ -323,7 +323,7 @@ namespace LibraryManagementApp.Core
             else
             {
                 Console.WriteLine($"Wrong title inserted!");
-                SubMenuSearch(books, isBook);
+                SubMenuSearch(books, dvds, isBook);
             }
         }
 
@@ -349,7 +349,7 @@ namespace LibraryManagementApp.Core
             else
             {
                 Console.WriteLine($"Wrong Serial Numbers inserted!");
-                SubMenuSearch(books, isBook);
+                SubMenuSearch(books, dvds, isBook);
             }
         }
 
@@ -406,7 +406,7 @@ namespace LibraryManagementApp.Core
             return new User(email, password, name, lastname, phoneNumber, permission);
         }
 
-        static void Login(List<User> users, List<Book> books)
+        static void Login(List<User> users, List<Book> books, List<DVD> dvds)
         {
             Console.WriteLine($"Enter email: ");
             string? email = Console.ReadLine();
@@ -420,7 +420,7 @@ namespace LibraryManagementApp.Core
             {
                 Console.Clear();
                 Console.WriteLine($"Login succesful. Welcome {loggedInUser.Name} {loggedInUser.Lastname}");
-                SubMenuGuest(books);
+                SubMenuGuest(books, dvds);
             }
             else
             {
