@@ -5,6 +5,7 @@ namespace LibraryManagementApp.Core
         public const string inputBooksDb = "../LibraryManagementApp/Database/Books.csv";
         public const string inputDvdsDb = "../LibraryManagementApp/Database/DVDs.csv";
         public const string inputUser = "../LibraryManagementApp/Database/Users.csv";
+        public const string inputLoan = "../LibraryManagementApp/Database/Loans.csv";
 
         //* BOOKS
 
@@ -161,6 +162,12 @@ namespace LibraryManagementApp.Core
         }
 
         //* LOANS
+
+        public static void NewLoan(Loan loans)
+        {
+            using var output = File.AppendText(inputLoan);
+            output.WriteLine($"- {loans.User}, {loans.LoanedDocument}, {loans.LoanId}, {loans.StartTime}, {loans.EndTime}");
+        }
 
         //* USERS
 

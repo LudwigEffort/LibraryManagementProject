@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Security.Cryptography.X509Certificates;
 
 namespace LibraryManagementApp.Core
 {
@@ -30,9 +31,9 @@ namespace LibraryManagementApp.Core
                         break;
                     case 3: //? new user
                         Console.Clear();
-                        User user = SignUpForm();
-                        Parsing.NewUser(user);
-                        StartMenu();
+                        User user = SignUpForm(); //? make new user instance
+                        Parsing.NewUser(user); //? save user instance in db
+                        StartMenu(); //? back to main menu...
                         break;
                     case 0:
                         Console.Clear();
@@ -350,6 +351,23 @@ namespace LibraryManagementApp.Core
                 SubMenuSearch(isBook);
             }
         }
+
+        //* Utils loan
+
+        //TODO: make a method to set parameters for MakeNewLoan methods
+
+        // public static Loan MakeNewLoan() //? methods for instance a Loan
+        // {
+        //     //? for now ask email user for identify user for make a loan
+        //     List<User> users = Parsing.ReadUser();
+        //     List<Book> books = Parsing.Read();
+        //     List<DVD> dvds = Parsing.ReadDvd();
+
+
+
+        //     return;
+
+        // }
 
         //* Utils user
         static public User SignUpForm() //?TODO: while loops for wrong field 
