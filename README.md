@@ -17,9 +17,12 @@
       - DONE: methods to login
       - TODO: login admin (easy) and print loans
     - LOAN:
-      - TODO: methods to make loan
+      - DONE: methods to make loan
       - TODO: progressive numbers for loan
       - TODO: search loan by name and lastname (admin)
-      - TODO: add to loan the **TIME**
+      - DONE: add to loan the **TIME**
+      - TODO: manage user info
+      - TODO: make loan from auth user
+      - TODO: add ReadLoan in Parsing
 
 - TODO: manage logged user with boolean (refactor user class with new boolean attribute)
