@@ -26,3 +26,4 @@
       - TODO: add ReadLoan in Parsing
 
 - TODO: manage logged user with boolean (refactor user class with new boolean attribute)
+- TODO: manage if user inset item id already rented

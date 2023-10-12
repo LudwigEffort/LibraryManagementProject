@@ -11,6 +11,7 @@ namespace LibraryManagementApp.Core
             List<Book> books = Parsing.Read();
             List<DVD> dvds = Parsing.ReadDvd();
             //List<Loan> loans;
+            User loggedInUser;
 
             //Console.Clear();
             Figlet.PrintProgramTitle();
@@ -360,6 +361,14 @@ namespace LibraryManagementApp.Core
 
         //TODO: make a method to set parameters for MakeNewLoan methods
 
+        public static void SettingLoan()
+        {
+            //? pass user logged
+            //? pass Lists of books and dvds
+            //? pass isbn or serial numbers
+            //? pass isBook
+        }
+
         public static Loan? MakeNewLoan(User user, List<Book> books, List<DVD> dvds, string identifier, bool isBook) //? methods for instance a Loan
         {
             //? for now ask email user for identify user for make a loan
@@ -372,6 +381,7 @@ namespace LibraryManagementApp.Core
                 Book book = books.Find(book => book.ISBN == identifier);
                 if (book != null && book.Status == true)
                 {
+                    Parsing.ChangeStatus(identifier);
                     return new(user, book, "1a", startT, endTime);
                 }
             }
@@ -380,6 +390,7 @@ namespace LibraryManagementApp.Core
                 DVD dvd = dvds.Find(dvd => dvd.SerialNumber == identifier);
                 if (dvd != null && dvd.Status == true)
                 {
+                    Parsing.ChangeStatusDvd(identifier);
                     return new(user, dvd, "1a", startT, endTime);
                 }
             }
@@ -426,7 +437,7 @@ namespace LibraryManagementApp.Core
 
         //? Login user 
         //TODO: add verification of login
-        static void Login(List<User> users, List<Book> books, List<DVD> dvds)
+        static User Login(List<User> users, List<Book> books, List<DVD> dvds)
         {
             Console.WriteLine($"Enter email: ");
             string? email = Console.ReadLine();
@@ -434,19 +445,21 @@ namespace LibraryManagementApp.Core
             Console.WriteLine($"Enter password: ");
             string? password = Console.ReadLine();
 
-            User loggedInUser = users.Find(user => user.Email == email && user.CheckPassword(password)); //TODO: resolve it!
+            User loggedInUser = users.Find(user => user.Email == email && user.CheckPassword(password)); //FIXME: resolve it!
 
             if (loggedInUser != null)
             {
                 Console.Clear();
                 Console.WriteLine($"Login succesful. Welcome {loggedInUser.Name} {loggedInUser.Lastname}");
                 SubMenuGuest(users, books, dvds);
+                return loggedInUser;
             }
             else
             {
                 Console.Clear();
                 Console.WriteLine($"Invalid email or password!");
                 StartMenu();
+                return null; //FIXME
             }
 
         }
