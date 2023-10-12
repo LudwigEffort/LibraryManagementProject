@@ -26,7 +26,7 @@ namespace LibraryManagementApp.Core
                 {
                     case 1: //? guest login (now user login)
                         Console.Clear();
-                        Login(users, books, dvds);
+                        loggedInUser = Login(users, books, dvds);
                         break;
                     case 2: //? admin login
                         Console.Clear();
@@ -50,7 +50,7 @@ namespace LibraryManagementApp.Core
 
         }
 
-        public static void SubMenuGuest(List<User> users, List<Book> books, List<DVD> dvds)
+        public static void SubMenuGuest(User loggedInUser, List<Book> books, List<DVD> dvds)
         {
             string[] option = { "1. Booking item", "2. Print my booking", "0. Back" };
             int selectOption;
@@ -67,7 +67,7 @@ namespace LibraryManagementApp.Core
                 {
                     case 1:
                         Console.Clear();
-                        SubMenuItem(users, books, dvds);
+                        SubMenuItem(loggedInUser, books, dvds);
                         //Console.WriteLine($"Not implemented");
                         break;
                     case 2:
@@ -86,7 +86,7 @@ namespace LibraryManagementApp.Core
 
         }
 
-        public static void SubMenuItem(List<User> users, List<Book> books, List<DVD> dvds)
+        public static void SubMenuItem(User loggedInUser, List<Book> books, List<DVD> dvds)
         {
             string[] option = { "1. Book", "2. DVD", "0. Back" };
             int selectOption;
@@ -102,16 +102,16 @@ namespace LibraryManagementApp.Core
                 {
                     case 1:
                         Console.Clear();
-                        SubMenuSearch(users, books, dvds, isBook);
+                        SubMenuSearch(loggedInUser, books, dvds, isBook);
                         break;
                     case 2:
                         Console.Clear();
                         isBook = false;
-                        SubMenuSearch(users, books, dvds, isBook);
+                        SubMenuSearch(loggedInUser, books, dvds, isBook);
                         break;
                     case 0:
                         Console.Clear();
-                        SubMenuGuest(users, books, dvds); //TODO: add if for manage guest or admin
+                        SubMenuGuest(loggedInUser, books, dvds); //TODO: add if for manage guest or admin
                         break;
                     default:
                         Console.WriteLine($"Wrong option!");
@@ -121,7 +121,7 @@ namespace LibraryManagementApp.Core
 
         }
 
-        public static void SubMenuSearch(List<User> users, List<Book> books, List<DVD> dvds, bool isBook)
+        public static void SubMenuSearch(User loggedInUser, List<Book> books, List<DVD> dvds, bool isBook)
         {
             string bookOrDvd = "";
             string item = "";
@@ -156,7 +156,7 @@ namespace LibraryManagementApp.Core
                         {
                             PrintBook(books); //? Print all available books
                             //TODO: add loan methods
-                            Loan loan = MakeNewLoan(users[1], books, dvds, "978-0743273565", true);
+                            Loan loan = MakeNewLoan(loggedInUser, books, dvds, "978-0142437247", true);
                             Parsing.NewLoan(loan);
                         }
                         else
@@ -169,12 +169,12 @@ namespace LibraryManagementApp.Core
                         Console.Clear();
                         if (isBook == true)
                         {
-                            SearchByTitle(users, books, dvds, isBook); //? Print books by title
+                            SearchByTitle(loggedInUser, books, dvds, isBook); //? Print books by title
                             //TODO: add loan methods
                         }
                         else
                         {
-                            SearchByTitleDvd(users, books, dvds, isBook); //? Print dvds by title
+                            SearchByTitleDvd(loggedInUser, books, dvds, isBook); //? Print dvds by title
                             //TODO: add loan methods
                         }
                         break;
@@ -182,18 +182,18 @@ namespace LibraryManagementApp.Core
                         Console.Clear();
                         if (isBook == true)
                         {
-                            SearchByIsbn(users, books, dvds, isBook); //? Print book by isbn
+                            SearchByIsbn(loggedInUser, books, dvds, isBook); //? Print book by isbn
                             //TODO: add loan methods
                         }
                         else
                         {
-                            SearchBySerialNum(users, books, dvds, isBook);
+                            SearchBySerialNum(loggedInUser, books, dvds, isBook);
                             //TODO: add loan methods
                         }
                         break;
                     case 0:
                         Console.Clear();
-                        SubMenuItem(users, books, dvds);
+                        SubMenuItem(loggedInUser, books, dvds);
                         break;
                     default:
                         Console.WriteLine($"Wrong option!");
@@ -239,7 +239,7 @@ namespace LibraryManagementApp.Core
         }
 
         //? Print available books by Title
-        public static void SearchByTitle(List<User> users, List<Book> books, List<DVD> dvds, bool isBook)
+        public static void SearchByTitle(User loggedInUser, List<Book> books, List<DVD> dvds, bool isBook)
         {
             Console.WriteLine($"Search by title.");
             Console.WriteLine($"Enter a title: ");
@@ -260,12 +260,12 @@ namespace LibraryManagementApp.Core
             else
             {
                 Console.WriteLine($"Wrong title inserted!");
-                SubMenuSearch(users, books, dvds, isBook);
+                SubMenuSearch(loggedInUser, books, dvds, isBook);
             }
         }
 
         //? Print available books by ISBN
-        public static void SearchByIsbn(List<User> users, List<Book> books, List<DVD> dvds, bool isBook)
+        public static void SearchByIsbn(User loggedInUser, List<Book> books, List<DVD> dvds, bool isBook)
         {
             Console.WriteLine($"Search by ISBN.");
             Console.WriteLine($"Enter a ISBN: ");
@@ -286,7 +286,7 @@ namespace LibraryManagementApp.Core
             else
             {
                 Console.WriteLine($"Wrong ISBN inserted!");
-                SubMenuSearch(users, books, dvds, isBook);
+                SubMenuSearch(loggedInUser, books, dvds, isBook);
             }
         }
 
@@ -306,7 +306,7 @@ namespace LibraryManagementApp.Core
         }
 
         //? Print available dvds by Title
-        public static void SearchByTitleDvd(List<User> users, List<Book> books, List<DVD> dvds, bool isBook)
+        public static void SearchByTitleDvd(User loggedInUser, List<Book> books, List<DVD> dvds, bool isBook)
         {
             Console.WriteLine($"Search by title.");
             Console.WriteLine($"Enter a title: ");
@@ -327,12 +327,12 @@ namespace LibraryManagementApp.Core
             else
             {
                 Console.WriteLine($"Wrong title inserted!");
-                SubMenuSearch(users, books, dvds, isBook);
+                SubMenuSearch(loggedInUser, books, dvds, isBook);
             }
         }
 
         //? Print available dvds by Serial Numbers
-        public static void SearchBySerialNum(List<User> users, List<Book> books, List<DVD> dvds, bool isBook)
+        public static void SearchBySerialNum(User loggedInUser, List<Book> books, List<DVD> dvds, bool isBook)
         {
             Console.WriteLine($"Search by Serial Numbers.");
             Console.WriteLine($"Enter a Serial Numbers: ");
@@ -353,7 +353,7 @@ namespace LibraryManagementApp.Core
             else
             {
                 Console.WriteLine($"Wrong Serial Numbers inserted!");
-                SubMenuSearch(users, books, dvds, isBook);
+                SubMenuSearch(loggedInUser, books, dvds, isBook);
             }
         }
 
@@ -363,7 +363,7 @@ namespace LibraryManagementApp.Core
 
         public static void SettingLoan()
         {
-            //? pass user logged
+            //DONE pass user logged
             //? pass Lists of books and dvds
             //? pass isbn or serial numbers
             //? pass isBook
@@ -451,7 +451,7 @@ namespace LibraryManagementApp.Core
             {
                 Console.Clear();
                 Console.WriteLine($"Login succesful. Welcome {loggedInUser.Name} {loggedInUser.Lastname}");
-                SubMenuGuest(users, books, dvds);
+                SubMenuGuest(loggedInUser, books, dvds);
                 return loggedInUser;
             }
             else
