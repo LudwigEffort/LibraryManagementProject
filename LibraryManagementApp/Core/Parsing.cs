@@ -207,7 +207,7 @@ namespace LibraryManagementApp.Core
             //User user = new User("pippo", "pippo", "pippo", "pippo", "pippo", false);
             using var output = File.AppendText(inputUser);
 
-            output.WriteLine($"- {user.Email}, {user.Password}, {user.Name}, {user.Lastname}, {user.PhoneNumber}, {user.Permission}");
+            output.WriteLine($"- {user.Email}, {user.GetPassword()}, {user.Name}, {user.Lastname}, {user.PhoneNumber}, {user.Permission}");
 
         }
 

@@ -1,5 +1,3 @@
-using System.ComponentModel;
-
 namespace LibraryManagementApp.Core
 {
     class Menu
@@ -157,7 +155,7 @@ namespace LibraryManagementApp.Core
                         {
                             PrintBook(books); //? Print all available books
                             //TODO: add loan methods
-                            Loan loan = MakeNewLoan(users[2], books, dvds, "978-0743273565", true);
+                            Loan loan = MakeNewLoan(users[1], books, dvds, "978-0743273565", true);
                             Parsing.NewLoan(loan);
                         }
                         else
@@ -436,7 +434,7 @@ namespace LibraryManagementApp.Core
             Console.WriteLine($"Enter password: ");
             string? password = Console.ReadLine();
 
-            User loggedInUser = users.Find(user => user.Email == email && user.Password == password); //TODO: resolve it!
+            User loggedInUser = users.Find(user => user.Email == email && user.CheckPassword(password)); //TODO: resolve it!
 
             if (loggedInUser != null)
             {
