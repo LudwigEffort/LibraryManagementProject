@@ -20,7 +20,6 @@ namespace LibraryManagementApp.Core
             return $"{Email}, {Password}, {Name}, {Lastname}, {PhoneNumber}, {Permission}";
         }
 
-        public void BookingDocument() { } //? should add ChangeStatus() and NewLoan()
 
     }
 }

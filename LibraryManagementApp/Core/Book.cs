@@ -1,4 +1,3 @@
-
 namespace LibraryManagementApp.Core
 {
     public class Book : Document

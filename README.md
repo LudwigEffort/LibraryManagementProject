@@ -14,7 +14,7 @@
     - USER:
       - DONE: methods to sing up
       - DONE: methods to login
-      - TODO: login admin (easy)
+      - TODO: login admin (easy) and print loans
     - LOAN:
       - TODO: methods to make loan
       - TODO: progressive numbers for loan

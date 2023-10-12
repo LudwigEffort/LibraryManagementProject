@@ -11,7 +11,7 @@ namespace LibraryManagementApp.Core
 
             Console.Clear();
             Figlet.PrintProgramTitle();
-            Console.WriteLine($"How are you?");
+            Console.WriteLine($"Who are you?");
 
             do
             {
