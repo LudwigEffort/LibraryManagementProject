@@ -7,7 +7,5 @@ class Library
     static void Main(string[] args)
     {
         Menu.StartMenu();
-
     }
-
 }

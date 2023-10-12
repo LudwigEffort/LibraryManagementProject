@@ -140,43 +140,49 @@ namespace LibraryManagementApp.Core
             {
                 ShowsMenu(option);
                 selectOption = ReadChoise();
+
                 List<Book> books = Parsing.Read();
+                List<DVD> dvds = Parsing.ReadDvd();
+
                 switch (selectOption)
                 {
-                    //DO: add if to filter by book o dvd
                     case 1:
                         Console.Clear();
                         if (isBook == true)
                         {
-                            PrintBook(books);
-                            //? MakeLoan(user,boook);
+                            PrintBook(books); //? Print all available books
+                            //TODO: add loan methods
                         }
                         else
                         {
-                            Console.WriteLine($"Print all available DVD...");
-                            //TODO: add print all dvd methods
+                            PrintDVD(dvds); //? Print all available dvds
+                            //TODO: add loan methods
                         }
                         break;
                     case 2:
                         Console.Clear();
                         if (isBook == true)
                         {
-                            SearchByTitle(books, isBook);
+                            SearchByTitle(books, isBook); //? Print books by title
+                            //TODO: add loan methods
                         }
                         else
                         {
-                            Console.WriteLine($"Searching dvd by Title...");
+                            SearchByTitleDvd(dvds, isBook); //? Print dvds by title
+                            //TODO: add loan methods
                         }
                         break;
                     case 3:
                         Console.Clear();
                         if (isBook == true)
                         {
-                            SearchByIsbn(books, isBook);
+                            SearchByIsbn(books, isBook); //? Print book by isbn
+                            //TODO: add loan methods
                         }
                         else
                         {
-                            Console.WriteLine($"Searching DVD by Serial Numbers...");
+                            SearchBySerialNum(dvds, isBook);
+                            //TODO: add loan methods
                         }
                         break;
                     case 0:
@@ -278,6 +284,72 @@ namespace LibraryManagementApp.Core
             }
         }
 
+        //* Utils dvds
+
+        //? Print all avaialble dvds
+        public static void PrintDVD(List<DVD> dvds)
+        {
+            Console.WriteLine($"Available dvds: ");
+            foreach (var dvd in dvds)
+            {
+                if (dvd.Status == true)
+                {
+                    Console.WriteLine(dvd.ToString());
+                }
+            }
+        }
+
+        //? Print available dvds by Title
+        public static void SearchByTitleDvd(List<DVD> dvds, bool isBook)
+        {
+            Console.WriteLine($"Search by title.");
+            Console.WriteLine($"Enter a title: ");
+            string? searchTitle = Console.ReadLine();
+
+            if (searchTitle != null && searchTitle != "")
+            {
+                List<DVD> filteredTitle = dvds.Where(dvd => dvd.Title.Contains(searchTitle, StringComparison.OrdinalIgnoreCase)).ToList();
+                Console.WriteLine($"DVDs that contains ({searchTitle}) are: ");
+                foreach (var dvd in filteredTitle)
+                {
+                    if (dvd.Status == true)
+                    {
+                        Console.WriteLine(dvd.ToString());
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Wrong title inserted!");
+                SubMenuSearch(isBook);
+            }
+        }
+
+        //? Print available dvds by Serial Numbers
+        public static void SearchBySerialNum(List<DVD> dvds, bool isBook)
+        {
+            Console.WriteLine($"Search by Serial Numbers.");
+            Console.WriteLine($"Enter a Serial Numbers: ");
+            string? SearchBySerialNum = Console.ReadLine();
+
+            if (SearchBySerialNum != null && SearchBySerialNum != "")
+            {
+                List<DVD> filteredSerialNum = dvds.Where(dvd => dvd.SerialNumber.Contains(SearchBySerialNum, StringComparison.OrdinalIgnoreCase)).ToList();
+                Console.WriteLine($"DVDs that contains ({SearchBySerialNum}) are: ");
+                foreach (var dvd in filteredSerialNum)
+                {
+                    if (dvd.Status == true)
+                    {
+                        Console.WriteLine(dvd.ToString());
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Wrong Serial Numbers inserted!");
+                SubMenuSearch(isBook);
+            }
+        }
 
         //* Utils user
         static public User SignUpForm() //?TODO: while loops for wrong field 

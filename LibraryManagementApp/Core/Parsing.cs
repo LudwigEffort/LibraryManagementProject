@@ -3,6 +3,7 @@ namespace LibraryManagementApp.Core
     public class Parsing
     {
         public const string inputBooksDb = "../LibraryManagementApp/Database/Books.csv";
+        public const string inputDvdsDb = "../LibraryManagementApp/Database/DVDs.csv";
         public const string inputUser = "../LibraryManagementApp/Database/Users.csv";
 
         //* BOOKS
@@ -74,6 +75,83 @@ namespace LibraryManagementApp.Core
                 }
 
                 File.WriteAllLines(inputBooksDb, lines);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine($"Error...");
+            }
+
+        }
+
+        //* DVD
+
+        public static List<DVD> ReadDvd() //? read from Books.csv
+        {
+            using var input = File.OpenText(inputDvdsDb);
+            var dvds = new List<DVD>();
+            input.ReadLine();
+
+            while (true)
+            {
+                string? line = input.ReadLine();
+
+                if (line is null)
+                {
+                    return dvds;
+                }
+
+                var chunks = line.Split(',');
+
+                string title = chunks[0][2..]; //? skip first two char
+                int year = Convert.ToInt32(chunks[1]);
+                string genre = chunks[2];
+                string location = chunks[3];
+                bool status = Convert.ToBoolean(chunks[4]);
+                string[] authors = chunks[5].Split(';');
+                string serialNumber = chunks[6].Trim();
+                int duration = Convert.ToInt32(chunks[7]);
+
+                var dvd = new DVD(title, year, genre, location, status, authors, serialNumber, duration);
+
+                dvds.Add(dvd);
+            }
+        }
+
+        public static void ChangeStatusDvd(string serialNumber) //? change status dvd from Dvds.csv
+        {
+            try
+            {
+                var lines = File.ReadAllLines(inputDvdsDb);
+                bool found = false;
+
+                for (int i = 1; i < lines.Length; i++)
+                {
+                    var chunks = lines[i].Split(',');
+
+                    if (chunks.Length >= 7 && chunks[6].Trim().ToLower() == serialNumber.Trim().ToLower())
+                    {
+                        if (Convert.ToBoolean(chunks[4]) == true)
+                        {
+                            chunks[4] = false.ToString().ToLower();
+                        }
+                        else
+                        {
+                            chunks[4] = true.ToString().ToLower();
+                        }
+                        lines[i] = string.Join(',', chunks);
+                        found = true;
+                        break;
+                    }
+
+                }
+
+                if (!found) //? NOT FOUND
+                {
+                    Console.WriteLine($"Book with ISBN {serialNumber} not found.");
+                    return;
+                }
+
+                File.WriteAllLines(inputDvdsDb, lines);
             }
             catch (Exception)
             {
