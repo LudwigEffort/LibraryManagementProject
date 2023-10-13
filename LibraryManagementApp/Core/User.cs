@@ -2,7 +2,6 @@ namespace LibraryManagementApp.Core
 {
     public class User
     {
-        //public string? Email, Password, Name, Lastname, PhoneNumber;
         public string? Email { get; set; }
         private string? Password { get; set; }
         public string? Name { get; set; }

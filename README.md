@@ -1,9 +1,6 @@
 # TODO List
 
-- make classes
-- DOING: login and print document by guest if admin print book and loan
 - Methods
-
   - methods to sign in user
   - booking document (book or dvd)
   - add, edit and remove document by admin (after delivery)
@@ -21,9 +18,14 @@
       - TODO: progressive numbers for loan
       - TODO: search loan by name and lastname (admin)
       - DONE: add to loan the **TIME**
-      - TODO: manage user info
-      - TODO: make loan from auth user
-      - TODO: add ReadLoan in Parsing
+      - DONE: make loan from auth user
+      - DONE: add ReadLoan in Parsing
 
-- TODO: manage logged user with boolean (refactor user class with new boolean attribute)
-- TODO: manage if user inset item id already rented
+# Delivery
+
+## Team: Sforzo and Trovato
+
+### TO implement
+
+- progressive alphanumeric id for loan
+- search loans by name and lastname

@@ -8,7 +8,7 @@ Library books:
 - One Hundred Years of Solitude, 1967, Magical Realism, Shelf7, true, Gabriel Garcia Marquez, 978-0060883287, 417
 - The Great Expectations, 1861, Fiction, Shelf8, true, Charles Dickens, 978-0141439563, 505
 - The Lord of the Rings, 1954, Fantasy, Shelf9, true, J.R.R. Tolkien, 978-0544003415, 1178
-- The Da Vinci Code, 2003, Mystery, Shelf10, true, Dan Brown, 978-0307474278, 597
+- The Da Vinci Code, 2003, Mystery, Shelf10,false, Dan Brown, 978-0307474278, 597
 - Harry Potter and the Sorcerer's Stone, 1997, Fantasy, Shelf11, true, J.K. Rowling, 978-0590353427, 309
 - The Chronicles of Narnia, 1950, Fantasy, Shelf12, true, C.S. Lewis, 978-0066238500, 767
 - Brave New World, 1932, Dystopian, Shelf13, true, Aldous Huxley, 978-0060850524, 288

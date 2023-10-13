@@ -163,6 +163,82 @@ namespace LibraryManagementApp.Core
 
         //* LOANS
 
+        public static List<Loan> ReadLoan() //? read from Books.csv
+        {
+            using var input = File.OpenText(inputLoan);
+            var loans = new List<Loan>();
+            input.ReadLine();
+
+            while (true)
+            {
+                string? line = input.ReadLine();
+
+                if (line is null)
+                {
+                    return loans;
+                }
+
+                var chunks = line.Split(',');
+
+                string email = chunks[0][2..].Trim();
+                string password = chunks[1].Trim();
+                string name = chunks[2].Trim();
+                string lastname = chunks[3].Trim();
+                string phoneNumber = chunks[4].Trim();
+                bool permission = Convert.ToBoolean(chunks[5].Trim());
+
+                User user = new User(email, password, name, lastname, phoneNumber, permission);
+
+                Book book = null;
+
+                DVD dvd = null;
+
+
+                if (chunks[12].StartsWith("978-"))
+                {
+                    string title = chunks[6].Trim(); //? skip first two char
+                    int year = Convert.ToInt32(chunks[7]);
+                    string genre = chunks[8];
+                    string location = chunks[9];
+                    bool status = Convert.ToBoolean(chunks[10]);
+                    string[] authors = chunks[11].Split(';');
+                    string isbn = chunks[12].Trim(new char[] { ' ', '-' });
+                    int pages = Convert.ToInt32(chunks[13]);
+
+                    book = new Book(title, year, genre, location, status, authors, isbn, pages);
+
+                    string id = chunks[14];
+                    DateTime startTime = Convert.ToDateTime(chunks[15]);
+                    DateTime endTime = Convert.ToDateTime(chunks[16]);
+
+                    Loan loan = new(user, book, id, startTime, endTime);
+
+                    loans.Add(loan);
+                }
+                else
+                {
+                    string title = chunks[6].Trim(); //? skip first two char
+                    int year = Convert.ToInt32(chunks[7]);
+                    string genre = chunks[8];
+                    string location = chunks[9];
+                    bool status = Convert.ToBoolean(chunks[10]);
+                    string[] authors = chunks[11].Split(';');
+                    string serialNumber = chunks[12].Trim();
+                    int duration = Convert.ToInt32(chunks[13]);
+
+                    dvd = new DVD(title, year, genre, location, status, authors, serialNumber, duration);
+
+                    string id = chunks[14];
+                    DateTime startTime = Convert.ToDateTime(chunks[15]);
+                    DateTime endTime = Convert.ToDateTime(chunks[16]);
+
+                    Loan loan = new(user, dvd, id, startTime, endTime);
+
+                    loans.Add(loan);
+                }
+            }
+        }
+
         public static void NewLoan(Loan loans)
         {
             using var output = File.AppendText(inputLoan);
