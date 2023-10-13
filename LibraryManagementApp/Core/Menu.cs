@@ -30,7 +30,6 @@ namespace LibraryManagementApp.Core
                         break;
                     case 2: //? admin login
                         Console.Clear();
-                        //TODO: add admin login
                         break;
                     case 3: //? new user
                         Console.Clear();
@@ -72,7 +71,8 @@ namespace LibraryManagementApp.Core
                     case 2:
                         Console.Clear();
                         //Console.WriteLine($"Not implemented");
-                        PrintLoans(loans);
+                        //PrintLoans(loans);
+                        SearchLoanByName(loggedInUser, books, dvds, loans);
                         StartMenu();
                         break;
                     case 0:
@@ -410,6 +410,41 @@ namespace LibraryManagementApp.Core
             }
         }
 
+
+        // search loan by name
+        public static void SearchLoanByName(User loggedInUser, List<Book> books, List<DVD> dvds, List<Loan> loans)
+        {
+            Console.WriteLine($"Search by Name and Lastname");
+            Console.WriteLine($"Enter name: ");
+            string? searchName = Console.ReadLine();
+            Console.WriteLine($"Enter Surname: ");
+            string? searchSurname = Console.ReadLine();
+
+            if (searchName != null && searchName != "" && searchSurname != null && searchSurname != "")
+            {
+                foreach (var loan in loans)
+                {
+                    if (loan.User.Name == searchName && loan.User.Lastname == searchSurname)
+                    {
+                        Console.WriteLine($"Loans of ({searchName} and {searchSurname}) are:");
+                        Console.WriteLine(loan.ToString());}
+
+                }
+                /*  List<Loan> filteredLoan = loans.Where(loan => loan.User.Name.Contains(searchName, StringComparison.OrdinalIgnoreCase).ToList());
+                  Console.WriteLine($"Loans of ({searchName} and {searchSurname}) are: ");
+                  foreach (var loan in filteredLoan)
+                  {
+
+                          Console.WriteLine(loan.ToString());
+
+                  }*/
+            }
+            else
+            {
+                Console.WriteLine($"Wrong name or surname inserted!");
+                SubMenuSearch(loggedInUser, books, dvds, loans, isBook);
+            }
+        }
         //* Utils user
 
         //? Sign up new user FORM
