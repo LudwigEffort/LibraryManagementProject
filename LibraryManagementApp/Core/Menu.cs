@@ -31,17 +31,6 @@ namespace LibraryManagementApp.Core
                         break;
                     case 2: //? admin login
                         loggedInUser = Login(users, books, dvds, loans, isBook);
-                        if (loggedInUser.Permission == true)
-                        {
-                            Console.WriteLine($"Welcome admin");
-                            SearchLoanByName(loggedInUser, books, dvds, loans, isBook);
-                        }
-                        else
-                        {
-                            Console.WriteLine($"Text");
-                            StartMenu();
-                        }
-                        Console.Clear();
                         break;
                     case 3: //? new user
                         Console.Clear();
@@ -66,7 +55,7 @@ namespace LibraryManagementApp.Core
             string[] option = { "1. Booking item", "2. Print my booking", "0. Back" };
             int selectOption;
 
-            Console.WriteLine($"You're Guest!");
+            Console.WriteLine($"Welcome Guest!");
             Console.WriteLine();
             Console.WriteLine($"What you wanna do?");
 
@@ -79,6 +68,7 @@ namespace LibraryManagementApp.Core
                     case 1:
                         Console.Clear();
                         SubMenuItem(loggedInUser, books, dvds, loans);
+                        Console.WriteLine();
                         break;
                     case 2:
                         Console.Clear();
@@ -94,6 +84,39 @@ namespace LibraryManagementApp.Core
                         break;
                 }
             } while (selectOption != 1 && selectOption != 2 && selectOption != 0);
+
+        }
+
+        public static void SubMenuAdmin(User loggedInUser, List<Book> books, List<DVD> dvds, List<Loan> loans, bool isBook)
+        {
+            string[] option = { "1. Print booking list", "0. Back" };
+            int selectOption;
+
+            Console.WriteLine($"Welcome Admin!");
+            Console.WriteLine();
+            Console.WriteLine($"What you wanna do?");
+
+            do
+            {
+                ShowsMenu(option);
+                selectOption = ReadChoise();
+                switch (selectOption)
+                {
+                    case 1:
+                        Console.Clear();
+                        SearchLoanByName(loggedInUser, books, dvds, loans, isBook);
+                        Console.WriteLine();
+                        StartMenu();
+                        break;
+                    case 0:
+                        Console.Clear();
+                        StartMenu();
+                        break;
+                    default:
+                        Console.WriteLine($"Wrong option!");
+                        break;
+                }
+            } while (selectOption != 1 && selectOption != 0);
 
         }
 
@@ -513,14 +536,22 @@ namespace LibraryManagementApp.Core
             string? password = Console.ReadLine();
 
 
-
             User loggedInUser = users.Find(user => user.Email == email && user.CheckPassword(password));
 
             if (loggedInUser != null)
             {
                 Console.Clear();
                 Console.WriteLine($"Login succesful. Welcome {loggedInUser.Name} {loggedInUser.Lastname}");
-                SubMenuGuest(loggedInUser, books, dvds, loans, isBook);
+                if (loggedInUser.Permission == true)
+                {
+                    SubMenuAdmin(loggedInUser, books, dvds, loans, isBook);
+                    //return loggedInUser;
+                }
+                else
+                {
+                    SubMenuGuest(loggedInUser, books, dvds, loans, isBook);
+                    //return loggedInUser;
+                }
                 return loggedInUser;
             }
             else
