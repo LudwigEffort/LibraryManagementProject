@@ -30,6 +30,17 @@ namespace LibraryManagementApp.Core
                         loggedInUser = Login(users, books, dvds, loans, isBook);
                         break;
                     case 2: //? admin login
+                        loggedInUser = Login(users, books, dvds, loans, isBook);
+                        if (loggedInUser.Permission == true)
+                        {
+                            Console.WriteLine($"Welcome admin");
+                            SearchLoanByName(loggedInUser, books, dvds, loans, isBook);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Text");
+                            StartMenu();
+                        }
                         Console.Clear();
                         break;
                     case 3: //? new user
@@ -71,8 +82,6 @@ namespace LibraryManagementApp.Core
                         break;
                     case 2:
                         Console.Clear();
-                        //Console.WriteLine($"Not implemented");
-                        //PrintLoans(loans);
                         SearchLoanByName(loggedInUser, books, dvds, loans, isBook);
                         StartMenu();
                         break;
@@ -239,6 +248,8 @@ namespace LibraryManagementApp.Core
             return selectOption;
         }
 
+        //* Methods input and output
+
         //* Utils book
 
         //? Print all available books
@@ -263,6 +274,8 @@ namespace LibraryManagementApp.Core
 
             if (searchTitle != null && searchTitle != "")
             {
+                //? make list filtered by Title, where (methods from LINQ) if find book with that title, add this book to list. 
+                //? lambda fun is for where methods, verify if find a book with that title and return true
                 List<Book> filteredTitle = books.Where(book => book.Title.Contains(searchTitle, StringComparison.OrdinalIgnoreCase)).ToList();
                 Console.WriteLine($"Books that contains ({searchTitle}) are: ");
                 foreach (var book in filteredTitle)
@@ -426,8 +439,7 @@ namespace LibraryManagementApp.Core
             }
         }
 
-
-        // search loan by name
+        //? Search loan by name
         public static void SearchLoanByName(User loggedInUser, List<Book> books, List<DVD> dvds, List<Loan> loans, bool isBook)
         {
             Console.WriteLine($"Search by Name and Lastname");
@@ -447,14 +459,6 @@ namespace LibraryManagementApp.Core
                     }
 
                 }
-                /*  List<Loan> filteredLoan = loans.Where(loan => loan.User.Name.Contains(searchName, StringComparison.OrdinalIgnoreCase).ToList());
-                  Console.WriteLine($"Loans of ({searchName} and {searchSurname}) are: ");
-                  foreach (var loan in filteredLoan)
-                  {
-
-                          Console.WriteLine(loan.ToString());
-
-                  }*/
             }
             else
             {
@@ -465,7 +469,7 @@ namespace LibraryManagementApp.Core
         //* Utils user
 
         //? Sign up new user FORM
-        static public User SignUpForm() //?TODO: while loops for wrong field 
+        static public User SignUpForm()
         {
             bool permission = false;
 
@@ -500,7 +504,6 @@ namespace LibraryManagementApp.Core
         }
 
         //? Login user 
-        //TODO: add verification of login
         static User Login(List<User> users, List<Book> books, List<DVD> dvds, List<Loan> loans, bool isBook)
         {
             Console.WriteLine($"Enter email: ");
@@ -509,7 +512,9 @@ namespace LibraryManagementApp.Core
             Console.WriteLine($"Enter password: ");
             string? password = Console.ReadLine();
 
-            User loggedInUser = users.Find(user => user.Email == email && user.CheckPassword(password)); //FIXME: resolve it!
+
+
+            User loggedInUser = users.Find(user => user.Email == email && user.CheckPassword(password));
 
             if (loggedInUser != null)
             {
@@ -523,7 +528,7 @@ namespace LibraryManagementApp.Core
                 Console.Clear();
                 Console.WriteLine($"Invalid email or password!");
                 StartMenu();
-                return null; //FIXME
+                return null;
             }
 
         }
