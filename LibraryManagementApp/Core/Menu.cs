@@ -14,6 +14,7 @@ namespace LibraryManagementApp.Core
             List<DVD> dvds = Parsing.ReadDvd();
             List<Loan> loans = Parsing.ReadLoan();
             User loggedInUser;
+            bool isBook = true;
 
             Figlet.PrintProgramTitle();
             Console.WriteLine($"Who are you?");
@@ -26,7 +27,7 @@ namespace LibraryManagementApp.Core
                 {
                     case 1: //? guest login (now user login)
                         Console.Clear();
-                        loggedInUser = Login(users, books, dvds, loans);
+                        loggedInUser = Login(users, books, dvds, loans, isBook);
                         break;
                     case 2: //? admin login
                         Console.Clear();
@@ -49,7 +50,7 @@ namespace LibraryManagementApp.Core
 
         }
 
-        public static void SubMenuGuest(User loggedInUser, List<Book> books, List<DVD> dvds, List<Loan> loans)
+        public static void SubMenuGuest(User loggedInUser, List<Book> books, List<DVD> dvds, List<Loan> loans, bool isBook)
         {
             string[] option = { "1. Booking item", "2. Print my booking", "0. Back" };
             int selectOption;
@@ -72,7 +73,7 @@ namespace LibraryManagementApp.Core
                         Console.Clear();
                         //Console.WriteLine($"Not implemented");
                         //PrintLoans(loans);
-                        SearchLoanByName(loggedInUser, books, dvds, loans);
+                        SearchLoanByName(loggedInUser, books, dvds, loans, isBook);
                         StartMenu();
                         break;
                     case 0:
@@ -112,7 +113,7 @@ namespace LibraryManagementApp.Core
                         break;
                     case 0:
                         Console.Clear();
-                        SubMenuGuest(loggedInUser, books, dvds, loans);
+                        SubMenuGuest(loggedInUser, books, dvds, loans, isBook);
                         break;
                     default:
                         Console.WriteLine($"Wrong option!");
@@ -153,16 +154,18 @@ namespace LibraryManagementApp.Core
                         if (isBook == true)
                         {
                             PrintBook(books); //? Print all available books
-                            //DONE: add loan methods
                             string identifier = SettingLoan();
-                            Loan loan = MakeNewLoan(loggedInUser, books, dvds, identifier, true);
+                            Loan loan = MakeNewLoan(loggedInUser, books, dvds, identifier, isBook);
                             Parsing.NewLoan(loan);
                             SubMenuItem(loggedInUser, books, dvds, loans);
                         }
                         else
                         {
                             PrintDVD(dvds); //? Print all available dvds
-                            //TODO: add loan methods
+                            string identifier = SettingLoan();
+                            Loan loan = MakeNewLoan(loggedInUser, books, dvds, identifier, isBook);
+                            Parsing.NewLoan(loan);
+                            SubMenuItem(loggedInUser, books, dvds, loans);
                         }
                         break;
                     case 2:
@@ -170,12 +173,19 @@ namespace LibraryManagementApp.Core
                         if (isBook == true)
                         {
                             SearchByTitle(loggedInUser, books, dvds, loans, isBook); //? Print books by title
-                            //TODO: add loan methods
+                            string identifier = SettingLoan();
+                            Loan loan = MakeNewLoan(loggedInUser, books, dvds, identifier, isBook);
+                            Parsing.NewLoan(loan);
+                            SubMenuItem(loggedInUser, books, dvds, loans);
                         }
                         else
                         {
                             SearchByTitleDvd(loggedInUser, books, dvds, loans, isBook); //? Print dvds by title
-                            //TODO: add loan methods
+                            string identifier = SettingLoan();
+                            Loan loan = MakeNewLoan(loggedInUser, books, dvds, identifier, isBook);
+                            Parsing.NewLoan(loan);
+                            SubMenuItem(loggedInUser, books, dvds, loans);
+
                         }
                         break;
                     case 3:
@@ -183,12 +193,18 @@ namespace LibraryManagementApp.Core
                         if (isBook == true)
                         {
                             SearchByIsbn(loggedInUser, books, dvds, loans, isBook); //? Print book by isbn
-                            //TODO: add loan methods
+                            string identifier = SettingLoan();
+                            Loan loan = MakeNewLoan(loggedInUser, books, dvds, identifier, isBook);
+                            Parsing.NewLoan(loan);
+                            SubMenuItem(loggedInUser, books, dvds, loans);
                         }
                         else
                         {
                             SearchBySerialNum(loggedInUser, books, dvds, loans, isBook);
-                            //TODO: add loan methods
+                            string identifier = SettingLoan();
+                            Loan loan = MakeNewLoan(loggedInUser, books, dvds, identifier, isBook);
+                            Parsing.NewLoan(loan);
+                            SubMenuItem(loggedInUser, books, dvds, loans);
                         }
                         break;
                     case 0:
@@ -359,13 +375,13 @@ namespace LibraryManagementApp.Core
 
         //* Utils loan
 
-        //TODO: make a method to set parameters for MakeNewLoan methods
+        //DONE: make a method to set parameters for MakeNewLoan methods
 
         public static string SettingLoan()
         {
             string? identifier;
 
-            Console.WriteLine($"Enter a ISBN or Serial numbers: ");
+            Console.WriteLine($"Enter a ISBN or Serial numbers to loan an item: ");
 
             do
             {
@@ -412,7 +428,7 @@ namespace LibraryManagementApp.Core
 
 
         // search loan by name
-        public static void SearchLoanByName(User loggedInUser, List<Book> books, List<DVD> dvds, List<Loan> loans)
+        public static void SearchLoanByName(User loggedInUser, List<Book> books, List<DVD> dvds, List<Loan> loans, bool isBook)
         {
             Console.WriteLine($"Search by Name and Lastname");
             Console.WriteLine($"Enter name: ");
@@ -427,7 +443,8 @@ namespace LibraryManagementApp.Core
                     if (loan.User.Name == searchName && loan.User.Lastname == searchSurname)
                     {
                         Console.WriteLine($"Loans of ({searchName} and {searchSurname}) are:");
-                        Console.WriteLine(loan.ToString());}
+                        Console.WriteLine(loan.ToString());
+                    }
 
                 }
                 /*  List<Loan> filteredLoan = loans.Where(loan => loan.User.Name.Contains(searchName, StringComparison.OrdinalIgnoreCase).ToList());
@@ -484,7 +501,7 @@ namespace LibraryManagementApp.Core
 
         //? Login user 
         //TODO: add verification of login
-        static User Login(List<User> users, List<Book> books, List<DVD> dvds, List<Loan> loans)
+        static User Login(List<User> users, List<Book> books, List<DVD> dvds, List<Loan> loans, bool isBook)
         {
             Console.WriteLine($"Enter email: ");
             string? email = Console.ReadLine();
@@ -498,7 +515,7 @@ namespace LibraryManagementApp.Core
             {
                 Console.Clear();
                 Console.WriteLine($"Login succesful. Welcome {loggedInUser.Name} {loggedInUser.Lastname}");
-                SubMenuGuest(loggedInUser, books, dvds, loans);
+                SubMenuGuest(loggedInUser, books, dvds, loans, isBook);
                 return loggedInUser;
             }
             else
